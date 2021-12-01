@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <assert.h>
 
 const int TAILLEX = 800;
@@ -107,17 +107,18 @@ void draw_ball(SDL_Surface * canvas)
 int main(int argc, char **argv)
 {
     SDL_Surface *canvas = NULL;
-    SDL_Surface *ecran = NULL;
+    SDL_Window *ecran = NULL;
+    SDL_Renderer *renderer = NULL;
     SDL_Event event;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
         handle_SDL_error("Init");
 
-    ecran = SDL_SetVideoMode(TAILLEX, TAILLEY, 32, SDL_SWSURFACE);
+    ecran = SDL_CreateWindow("Ensipong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, TAILLEX, TAILLEY, 0);
     if (ecran == NULL)
         handle_SDL_error("SetVideoMode");
 
-    SDL_WM_SetCaption("Mini carrés", NULL);
+    //   SDL_WM_SetCaption("Mini carrés", NULL);
 
     srandom(getpid());
 
@@ -143,24 +144,24 @@ int main(int argc, char **argv)
     if (canvas == NULL)
         handle_SDL_error();
 
+    renderer = SDL_CreateRenderer(ecran, -1, SDL_RENDERER_SOFTWARE);
+
     assert(canvas->pixels == tampon);
 
-    if (SDL_BlitSurface(canvas, NULL, ecran, NULL) == -1)
+    if (SDL_BlitSurface(canvas, NULL, SDL_GetWindowSurface(ecran), NULL) == -1)
         handle_SDL_error("BlitSurface");
 
-    if (SDL_Flip(ecran) == -1)
-        handle_SDL_error("Flip");
+    SDL_RenderPresent(renderer);
 
     while (1) {
         SDL_Delay(20);
 
         draw_ball(canvas);
 
-        if (SDL_BlitSurface(canvas, NULL, ecran, NULL) == -1)
+        if (SDL_BlitSurface(canvas, NULL, SDL_GetWindowSurface(ecran), NULL) == -1)
             handle_SDL_error("BlitSurface");
 
-        if (SDL_Flip(ecran) == -1)
-            handle_SDL_error("Flip");
+        SDL_RenderPresent(renderer);
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)

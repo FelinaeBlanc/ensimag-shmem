@@ -10,8 +10,8 @@ enable_testing()
 #######
 # Detect SDL using standard CMake FindSDL
 #####
-find_package(SDL REQUIRED)
-set(SDL_INCLUDE_CFLAGS -I${SDL_INCLUDE_DIR})
+find_package(SDL2 REQUIRED)
+set(SDL_INCLUDE_CFLAGS -I${SDL2_INCLUDE_DIR})
 
 
 # Debug build
@@ -38,7 +38,7 @@ endif()
 # shell il faut les ajouter ici
 ##
 add_executable(ensipong src/shmem_pong.c)
-target_link_libraries(ensipong ${SDL_LIBRARY})
+target_link_libraries(ensipong ${SDL2_LIBRARIES})
 
 ##
 # Programme de test
