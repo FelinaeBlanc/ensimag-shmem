@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
         handle_SDL_error("Init");
 
-    ecran = SDL_CreateWindow("Ensipong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, TAILLEX, TAILLEY, 0);
+    ecran = SDL_CreateWindow("Ensipong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, TAILLE_X, TAILLE_Y, 0);
     if (ecran == NULL)
         handle_SDL_error("SetVideoMode");
 
