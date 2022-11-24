@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 2.6)
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
+cmake_minimum_required(VERSION 3.10)
+####
+# The version number in previous line may be reduced if needed. I used
+# the default in cmake tutorial (oct 2021)
 
 project(Ensipong)
 enable_testing()
@@ -17,7 +17,7 @@ set(SDL_INCLUDE_CFLAGS -I${SDL2_INCLUDE_DIR})
 # Debug build
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${SDL_INCLUDE_CFLAGS} -Wall -Werror -std=gnu11")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${SDL_INCLUDE_CFLAGS} -Wall  -Wextra -Werror -std=gnu17")
 
 #########
 # Vous devez editer les lignes suivantes pour y mettre vos logins

@@ -85,6 +85,8 @@ static void draw_ball(SDL_Surface *canvas)
 
 int main(int argc, char **argv)
 {
+    (void) argc;
+    (void) argv;
     SDL_Surface *canvas = NULL;
     SDL_Window *ecran = NULL;
     SDL_Renderer *renderer = NULL;
