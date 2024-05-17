@@ -12,6 +12,8 @@
 #include <sys/types.h>
 #include <SDL2/SDL.h>
 #include <assert.h>
+#include <sys/mman.h>
+#include <fcntl.h>
 
 const int TAILLE_X = 800;
 const int TAILLE_Y = 600;
@@ -122,7 +124,16 @@ int main(int argc, char **argv)
    * Le tampon a changer pour mettre en place le couplage mémoire
    * entre les différents processus.
    *********************/
-    void *tampon = calloc(TAILLE_X * TAILLE_Y, 4);
+
+    //void *tampon = calloc(TAILLE_X * TAILLE_Y, 4);
+    int fd = shm_open("pong", O_RDWR | O_CREAT, 0666);
+    if (fd == -1)
+        handle_error("shm_open");
+    
+    if (ftruncate(fd, TAILLE_X * TAILLE_Y * 4) == -1)
+        handle_error("ftruncate");
+    
+    void *tampon = mmap(NULL, TAILLE_X * TAILLE_Y * 4, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (tampon == NULL)
         handle_error("malloc");
 
@@ -166,9 +177,14 @@ int main(int argc, char **argv)
     }
 
   fin:
-    /* On libère la mémoire avant de s'arrêter. */
+
     SDL_FreeSurface(canvas);
-    free(tampon);
+    //free(tampon);
+    // sh unlink
+    if (shm_unlink("pong") == -1)
+        handle_error("shm_unlink");
+    close(fd);
+
     SDL_Quit();
 
     return 0;

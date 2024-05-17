@@ -22,7 +22,7 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${SDL_INCLUDE_CFLAGS} -Wall  -We
 #########
 # Vous devez editer les lignes suivantes pour y mettre vos logins
 #########
-set(VARIANTE_LOGINS login1 login2 login3)
+set(VARIANTE_LOGINS "lennea")
 
 #########
 

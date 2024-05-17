@@ -1,0 +1,1 @@
+/usr/bin/cc -g -I -Wall  -Wextra -Werror -std=gnu17 CMakeFiles/ensipong.dir/src/shmem_pong.c.o -o ensipong  -L/usr/lib/x86_64-linux-gnu  -lSDL2 -lrt 
